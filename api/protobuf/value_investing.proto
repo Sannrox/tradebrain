@@ -1,0 +1,59 @@
+syntax = "proto3";
+
+package valueinvesting;
+
+message CompanyData {
+    string ticker = 1;
+    double revenue = 2;
+    double net_income = 3;
+    // other fields...
+}
+
+message ValueInvestingMetrics {
+    double pe_ratio = 1;
+    double pb_ratio = 2;
+    // other fields...
+}
+
+message EquityRequest {
+    string ticker = 1;
+    double total_assets = 2;
+    double total_liabilities = 3;
+    optional double preferred_equity = 4;
+    // other fields...
+}
+
+message EquityResponse {
+    double shareholders_equity = 1;
+}
+
+
+message BookValuePerShareRequest {
+    string ticker = 1;
+    double shareholders_equity = 2;
+    double outstanding_shares = 3;
+}
+
+message BookValuePerShareResponse {
+    double book_value_per_share = 1;
+}
+
+message GrahamNumberRequest {
+    string ticker = 1;
+    double earnings_per_share = 2;
+    double book_value_per_share = 3;
+}
+
+message GrahamNumberResponse {
+    double graham_number = 1;
+}
+
+
+
+service ValueInvestingService {
+    rpc CalculateMetrics(CompanyData) returns (ValueInvestingMetrics);
+    rpc GrahamNumber(GrahamNumberRequest) returns (GrahamNumberResponse);
+    rpc CalculateShareholdersEquity(EquityRequest) returns (EquityResponse);
+    rpc BookValuePerShare(BookValuePerShareRequest) returns (BookValuePerShareResponse);
+}
+
